@@ -1,0 +1,40 @@
+
+### 1. 项目启动
+    项目基于py310, 拿到代码后首先安装依赖包
+        pip install -r requirements.txt
+
+    然后启动运行项目
+        python start.py
+
+    在浏览器中访问
+        http://127.0.0.1:2247/
+
+
+### 2. 配置百度的API密钥
+    本项目暂时用的接口是百度千帆,  官方文档地址: https://cloud.baidu.com/doc/Reference/s/9jwvz2egb
+
+    获取秘钥的方式
+        登录百度控制台  https://console.bce.baidu.com/
+
+![图1_获取自己的秘钥.png](图1_获取自己的秘钥.png)
+
+    
+    配置秘钥
+    在 apps\home\ws_views.py 文件中配置好自己的秘钥即可
+        client = Qianfan(
+            access_key="71af8***7376",  # 改成你自己的access_key
+            secret_key="1b4**2062a",  # 改成你自己的secret_key
+        )
+
+
+### 3. 项目整体说明
+    本项目使用django开发, 由于需要使用实时的方式将ai的回答返回给前端网页, 所以使用了websocket协议
+    标准的django框架里并没有自带websocket功能, 所以这里使用了django-channels库, 该库的官方文档为
+        https://channels.readthedocs.io/en/latest/
+
+    websocket的连接方式和传统的http连接有些相似, 也是根据url地址进行匹配, 匹配成功后进入相应的视图进行处理
+        url配置在 django_websocket\routings.py 文件里
+        视图处理在 apps\home\consumers.py 文件里, 在这个文件里又调用了 apps\home\ws_views.py 文件里的代码进行了更详细的细节处理.
+    
+
+    前端代码在 templates\index.html 文件里

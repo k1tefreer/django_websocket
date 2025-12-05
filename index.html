@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="{% static 'css/my_style.css' %}">
+    <!-- 引入jQuery -->
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+
+    <!-- layui -->
+    <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}">
+    <script src="{% static 'layui/layui.js' %}"></script>
+
+    <!-- vue -->
+    <script src="{% static 'js/vue3.4.38.prod.js' %}"></script>
+
+
+    <style>
+        body{background-color: #D3D3D3;}
+
+        .msg-list-container{
+            overflow: auto; box-sizing: border-box; white-space: pre-wrap;word-break:break-all;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <div style="background-color: white; height: 600px; width: 80vw;margin: 40px auto; border-radius: 16px;
+border: 10px solid #0997d2" class="flex-col p-1 gap-2 msg-list-container">
+        <div style="height: 80%; overflow: auto;" class="flex flex-col gap-2 border-1 p-1" id="msg_list">
+            <div v-for="item in message_list">
+                <!-- 系统消息：v-if="item.role=='sys'" -->
+                <div class="flex gap-2" v-if="item.role=='sys'">
+                    <i class="layui-icon layui-icon-android" style="font-size: 24px;margin-top: 4px; color:#ff5722"></i>
+                    <div  class="p-1 radius-2" style="background-color: #16baaa; color:white;">[[ item.msg]]</div>
+                </div>
+                <!-- 用户消息：v-if="item.role=='user'" -->
+                <div class="flex justify-end gap-2" v-if="item.role=='user'">
+                    <div  class="p-1 radius-2"  style="background-color: #0099ff; color:white;">[[ item.msg]]</div>
+                    <i class="layui-icon layui-icon-dialogue" style="font-size: 24px;margin-top: 4px; color:#16baaa"></i>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div style="height: 20%;" class="flex gap-2">
+            <textarea name="" placeholder="请输入问题" v-model="question" class="layui-textarea"
+                      @keydown.enter="sendMessage($event)"></textarea>
+            <div class="grid">
+                <button type="button" class="layui-btn layui-btn-lg" style="width: 16ch" @click="sendMessage">发送</button>
+                <a class="layui-btn layui-btn-lg"
+           href="http://127.0.0.1:8000/admin/list/"
+           style="width: 16ch; margin-left: 0; background-color: #F08080; color: white; border-color: #F08080;">
+           返回首页
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script >
+        const { createApp, ref, onMounted } = Vue
+        const app = createApp({
+            delimiters:[`[[`, ']]'],  // 这个选项可以用来改变vue默认的\{\{\}}语法，改为\[\[\]\]
+            setup(){
+                let message_list = ref([
+                    {'role':'sys', 'msg':'你好,欢迎使用智能问答'},
+                ])
+
+                let question = ref('')  // 问题
+                let disable_btn = ref(false)  // 按钮禁用
+                let ws = new WebSocket("ws://127.0.0.1:2247/ws/test/");
+                ws.onmessage = function(event) {
+                    let msg_list_el = document.getElementById('msg_list');
+                    if(event.type == 'message'){
+                        let data = JSON.parse(event.data)
+                        if(data.type=='ai_start'){
+                            message_list.value.push({'role':'sys', 'msg':''},)
+                        }
+                        if(data.type=='ai'){
+                            message_list.value[message_list.value.length-1].msg += data.msg
+                            msg_list_el.scrollTop = msg_list_el.scrollHeight;
+                        }
+                        if(data.type=='ai_end'){
+                            disable_btn.value = false
+                        }
+                    }
+                };
+                function sendMessage(event) {
+                    if(disable_btn.value){
+                        return
+                    }
+                    console.log(question.value)
+                    message_list.value.push({'role':'user', 'msg':question.value})
+                    ws.send(JSON.stringify({type:'send_msg', msg:question.value}))
+                    disable_btn.value = true
+                    question.value = ''
+                }
+                const send = ()=>{
+                }
+
+                return {
+                    message_list,
+                    question,
+
+                    sendMessage,
+                    send,
+                }
+            }
+        }).mount('#app')
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+/* 去掉元素默认样式
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul, li {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+*/
+
+/* 常用改颜色
+
+紫色文字 color: #7E6CF5;
+紫色背景 background-color: #7e6cf5;
+
+
+*/
+
+
+view{
+	box-sizing: border-box;
+	line-height: 1.5;
+}
+
+
+html{
+	/* 自定义全局变量 */
+
+	/* 边距 和 间距 */
+	--base-padding: 1rem;
+	--half-padding:.5rem;
+	--gap-1:.25rem;  /* flex grid 布局间距 */
+	--gap-2:.5rem;
+	--gap-3: 1rem;
+
+	--p-1:.5rem;  /* 内边距 */
+	--p-2:1rem;  /* 内边距 */
+	--p-3:2rem;  /* 内边距 */
+
+	--m-1:.5rem;  /* 外边距 */
+	--m-2:1rem;  /* 外边距 */
+	--m-3:2rem;  /* 外边距 */
+
+
+	/* 圆角 */
+	--radius-1: .25rem;
+	--radius-2: .375rem;
+	--radius-3: .5rem;
+
+
+	/* 字体大小 */
+	--ft-26: 1.625rem;
+	--ft-24: 1.5rem;
+	--ft-22: 1.375rem;
+	--ft-20: 1.25rem;  /* 一级标题 */
+	--ft-18: 1.125rem;  /* 二级标题 */
+	--ft-16: 1rem;  /* 正文字体 */
+	--ft-14: .875rem;
+	--ft-12: .75rem;
+	--ft-10: .625rem;
+
+
+	/* 颜色 */
+	--color-purple-light:#8D8FE9;
+	--color-purple:#7E6CF5;
+	--color-purple-dark:#7966f5;
+
+	--color-primary-light:#6c757d;
+	--color-primary:#0d6efd;
+	--color-primary-dark:#212529;
+	--color-gray-light:#aaa;
+	--color-gray:#666;
+	--color-orange:#ffa500;  /* 橙色 */
+	--bg-color:#f1f1f1;  /* 整体页面背景颜色 */
+
+
+}
+
+
+
+/* 字体及颜色 start */
+.h1{ font-size: var(--ft-20); font-weight:bolder;}  /* 一级标题 */
+.h2{ font-size: var(--ft-18); font-weight:bolder;}  /* 二级标题 */
+.h3{ font-size: var(--ft-16); }  /* 正文字体 */
+.h4{ font-size: var(--ft-14); }
+.h5{ font-size: var(--ft-12); }
+
+.ft-20{font-size: var(--ft-20);}
+.ft-14{font-size: var(--ft-14); color: var(--color-gray-light);}
+.ft-12{font-size: var(--ft-12); color: var(--color-gray-light);}
+.color-white{color:white;}
+.color-red{color:red;}
+.color-light-gray{color:var(--color-gray-light);}
+.color-gray{color:var(--color-gray);}
+
+/* 字体及颜色 end */
+
+/* 字体及文本相关 start */
+.fw-b{font-weight: bolder;}  /* 文字加粗 */
+.text-ellipsis{ text-overflow:ellipsis; overflow: hidden;white-space:nowrap; }  /* 多余的文字显示成省略号 */
+.text-center{text-align: center;}  /* 文本水平居中 */
+.text-end{text-align: end;}  /* 文本水平居右 */
+
+/* 字体及文本相关 end */
+
+
+
+/* 布局相关 start */
+.flex{ display: flex; }
+.flex-col{ display: flex; flex-direction: column; }
+.flex-wrap{ flex-wrap: wrap;}
+
+.justify-center{ justify-content: center;}
+.justify-end{ justify-content: end;}
+.justify-between{ justify-content: space-between; }
+.justify-around{ justify-content: space-around; }
+.align-center{ align-items: center; }
+.align-end{ align-items: end;}
+
+.gap-1{ gap: var(--gap-1);}
+.gap-2{ gap: var(--gap-2); }
+.gap-3{ gap: var(--gap-3) ; }
+
+.grid{ display: grid; }
+
+/* 布局相关 end */
+
+
+
+/* 内边距 和外边距 start */
+.p-1{padding: var(--p-1);}
+.p-2{padding: var(--p-2);}
+.p-3{padding: var(--p-3);}
+.p-x-1{padding:0 var(--p-1);}
+.p-x-2{padding:0 var(--p-2);}
+.p-x-3{padding:0 var(--p-3);}
+.p-y-1{padding:var(--p-1) 0;}
+.p-y-2{padding:var(--p-2) 0;}
+.p-y-3{padding:var(--p-3) 0;}
+
+.m-1{margin: var(--m-1);}
+.m-2{margin: var(--m-2);}
+.m-3{margin: var(--m-3);}
+.m-t-1{margin-top: var(--m-1);}
+.m-t-2{margin-top: var(--m-2);}
+.m-t-3{margin-top: var(--m-3);}
+.m-b-1{margin-bottom: var(--m-1);}
+.m-b-2{margin-bottom: var(--m-2);}
+.m-b-3{margin-bottom: var(--m-3);}
+.m-l-1{margin-left: var(--m-1);}
+.m-l-2{margin-left: var(--m-2);}
+.m-l-3{margin-left: var(--m-3);}
+.m-r-1{margin-right: var(--m-1);}
+.m-r-2{margin-right: var(--m-2);}
+.m-r-3{margin-right: var(--m-3);}
+.m-x-1{margin:0 var(--m-1);}
+.m-x-2{margin:0 var(--m-2);}
+.m-x-3{margin:0 var(--m-3);}
+.m-y-1{margin:var(--m-1) 0;}
+.m-y-2{margin:var(--m-2) 0;}
+.m-y-3{margin:var(--m-3) 0;}
+
+/* 内边距 和外边距 end */
+
+
+
+/* 圆角 start */
+.radius-1{border-radius: var(--radius-1);}
+.radius-2{border-radius: var(--radius-2);}
+.radius-3{border-radius: var(--radius-3);}
+
+/* 圆角 end */
+
+
+
+
+
+
+
+
+
+
+.border-1{ border: .0625rem solid #ccc; }  /* 边框 */
+
+.bg-white{background-color: white;}  /* 白色背景 */
+
+.hr{border: .0625rem solid #eee;}
+
+.logo{ width: 2.5rem; height: 2.5rem; }
+
+
+/* 卡片 */
+.card{
+    background-color: white;padding: var(--p-1); border-radius: var(--radius-3);
+    display: grid;
+}
+
+
+
+/* 占位盒子 */
+.placeholder-box{ height: 3.75rem;}
+
+
+/* 渐变按钮 */
+.gradual-btn{
+    /* background-color: #7E6CF5; */
+    background: linear-gradient( 90deg, rgba(126,108,245,0.62) 0%, #7E6CF5 100%);
+
+    color: white;  flex: 1; margin-top: .625rem; width: 100%;
+    height: 3.625rem; line-height: 3.625rem; border-radius: 3.625rem;font-weight: bolder;
+}
+
+/* 文本按钮 */
+.text-btn{
+	background-color: #f1f1f1; padding: .125rem .5rem; border-radius: var(--radius-1); font-size: var(--ft-14);
+}
+.text-btn:active{
+	background-color: #ddd;
+}
+
+/* 文本按钮 */
+.text-btn-sm{
+	background-color: #f1f1f1; padding: .125rem .5rem; border-radius: var(--radius-1); font-size: var(--ft-12);
+}
+.text-btn-sm:active{
+	background-color: #ddd;
+}
